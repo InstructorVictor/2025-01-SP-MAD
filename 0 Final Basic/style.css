@@ -1,0 +1,65 @@
+/* Generic center a screen  */
+.centerContent {
+    text-align: center;
+    /* padding-top: 5em; */
+}
+
+/* Generic resize image */
+.imgResizer {
+    width: 98%;
+}
+
+/* Add a Drop Cap to paragraph */
+.dropCap::first-letter {
+    font-size: 3em;
+    float: left;
+    margin-right: 0.1em;
+    line-height: 1;
+}
+
+/* Style the whole "top" area placeholder of the comic collection */
+div#divComicCollection {
+    padding:  2em; /* Inside space */
+}
+
+/* Only style the <table> in this certain <div> */
+div#divComicCollection table {
+    background-color: pink;
+    width: 100%;
+    margin: auto;
+    /* NOW style the table edges via CSS, so REMOVE the inline HTML */
+    border: 5px dotted red;
+    /* Guard against word overrun */
+    word-wrap: break-word;
+}
+
+/* Style the FIRST row (Headings) */
+div#divComicCollection table tr th {
+    background-color: rebeccapurple;
+    color: whitesmoke;
+}
+
+/* Table borders */
+/* Chain two Selctors together */
+div#divComicCollection table tr td,  
+    div#divComicCollection table tr th {
+    border: 2px dashed red;
+}
+
+/* Add zebra striping to style our rows <tr> */
+/* Every Even row... */
+div#divComicCollection table tr:nth-of-type(even) {
+    /* Solid colors */
+    /* background-color: rgb(222, 55, 25);*/
+    /* Transparent colors 0 - 1        0.0 0.25 0.50 0.75 1.00         */
+    background-color: rgba(111, 55, 255, 0.50);
+}
+
+/* Add zebra striping to style our rows <tr> */
+/* Every Odd row... */
+div#divComicCollection table tr:nth-of-type(odd) {
+    /* background-color: rgb(111, 55, 25);*/ 
+    background-color: rgba(111, 55, 255, 1.0);
+    color: whitesmoke;
+}
+/* 2025-05-05 */

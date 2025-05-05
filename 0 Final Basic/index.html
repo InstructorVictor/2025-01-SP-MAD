@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- Set up project for "all" languages/alphabets -->
+  <meta charset="utf-8">
+  <!-- Set up project for Mobile Friendly -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <!-- App security. TO-DO: Set it properly for final build!!!!!!!!!!!!!!!!!! -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <!-- The magic that converts our Web Code to Native Code -->
+  <script src="cordova.js"></script>
+  <!-- One of the required template libraries -->
+  <script src="components/loader.js"></script>
+  <!-- Another of the required template libraries -->
+  <link rel="stylesheet" href="components/loader.css">
+
+  <!-- Onsen Libraries for the interface -->
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+
+  <!-- Our custom CSS code goes here -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- MOVED the JS starting fragment to scripts.js -->
+</head>
+<body>
+  <!-- Set up our app to have a sidemenu (swipable) Note: the whole app will have a side menu, so it must exist in an <ons-splitter> and use <ons-splitter-side> and <ons-splitter-content> -->
+  <ons-splitter>
+      <!-- All side menu(s) exist in <ons-splitter-side> -->
+      <ons-splitter-side collapse id="menuParent">
+          <ons-page>
+              <ons-list-item onclick="pageLoaderViaMenu('homeParent.html', '#menuParent');">Home</ons-list-item>
+              <ons-list-item onclick="pageLoaderViaMenu('profile.html',    '#menuParent');">Profile</ons-list-item>
+              <ons-list-item onclick="pageLoaderViaMenu('collection.html', '#menuParent');"><ons-icon icon="md-camera"></ons-icon>&nbsp; View Collection</ons-list-item>
+              <ons-list-item onclick="logOut();">Log Out</ons-list-item>
+          </ons-page>
+      </ons-splitter-side> <!-- END menuParent -->
+      
+      <ons-splitter-side collapse id="menuChild">
+          <ons-page>
+              <ons-list-item>Child Button 1</ons-list-item>
+          </ons-page>
+      </ons-splitter-side> <!-- END menuChild -->
+
+      <ons-splitter-side collapse id="menuAdmin"></ons-splitter-side> <!-- END menuAdmin -->
+
+      <!-- All main content exists in <ons-splitter-content> -->
+      <ons-splitter-content>
+          
+        <!-- <<< A blank "container" for loading the right screen at the right time >>> -->
+        <ons-navigator id="appNav"></ons-navigator>
+
+        <!-- Every screen of our app, will be a <template> loaded into <ons-navigator> as needed  NOTE: it's not <ons-tempalte> -->
+        <template id="welcome.html">
+            <ons-page class="centerContent">
+                <h1 style="line-height: 2.5em;">ComicsDB</h1>
+                <p>
+                    <ons-input modifier="underbar" type="email" placeholder="john@smith.com" id="loginEmail"></ons-input><br>
+                    <ons-input modifier="underbar" type="password" placeholder="CatDog99!!" id="loginPWD"></ons-input><br><br>
+                    <ons-button onclick="fnLogin();">Log In</ons-button>
+                </p>
+                <p><img src="img/kapow-9231193_640.png" class="imgResizer"></p>
+                <p>
+                    Don't have an account?<br><br>
+                    <ons-button onclick="pageLoader('signup.html');">Sign Up</ons-button>
+                </p>
+            </ons-page>
+        </template> <!-- END welcome.html -->
+        
+        <template id="signup.html" >
+            <ons-page>
+                <!-- Top toolbar/nav area -->
+                <ons-toolbar>
+                    <div class="left"><ons-back-button></ons-back-button></div>
+                    <div class="center">Sign Up</div>
+                </ons-toolbar>
+                
+                <!-- Main content area --> 
+                <div style="padding-top: 2em;" class="centerContent">
+                    <p><img src="img/zap-4335490_640.png" class="imgResizer"></p>       
+                    <!-- Sign up "form" to take user data for an account -->
+                    <ons-input modifier="underbar" placeholder="Email" type="email" id="signupEmail"></ons-input><br>
+                    <ons-input modifier="underbar" placeholder="Password" type="password" id="signupPWD"></ons-input><br>
+                    <ons-input modifier="underbar" placeholder="Confirm Password" type="password" id="signupPWDconf"></ons-input><br><br>
+                    Are you at least 13?<br>
+                    <ons-radio name="signupAge" value="true" id="signupAgeTrue">Yes: </ons-radio>
+                    <ons-radio name="signupAge" value="false" id="signupAgeFalse">No: </ons-radio><br>
+                    <p>
+                        <ons-button onclick="fnSignupClear();" id="signupClear">Clear</ons-button>
+                        <ons-button onclick="fnSignUp();" id="signupCreate">Create</ons-button>
+                    </p>
+                    <hr style="width: 75%">
+                    <p><ons-button onclick="pageLoader('about.html');">About the App</ons-button></p>
+                    <hr style="width: 75%">
+                </div>
+            </ons-page>
+        </template> <!-- END signup.html -->
+
+        <template id="about.html">
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left"><ons-back-button></ons-back-button></div>
+                    <div class="center">About</div>
+                </ons-toolbar>
+                <div style="padding: 1em;">
+                    <p class="dropCap">
+                        The ComicsDB app was made for the Mobile Apps Development program at SDCCE, taught by Victor Campos &lt;vcampos@sdccd.edu&gt; during the Spring 2025 semester. 
+                    </p>
+                    <p class="dropCap">
+                        It uses HTML, CSS, JavaScript, OnsenUI, PouchDB, and Cordova frameworks. It is free for edutional use only. <em>2025-05-05</em>
+                    </p>
+                    <p>
+                        <img src="img/100_0210.jpg" class="imgResizer">
+                    </p>
+                </div>
+            </ons-page>
+        </template> <!-- END about.html -->
+      
+        <template id="homeParent.html">
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <!-- DON'T FORGET THE # WITH YOUR ID!! -->
+                        <ons-toolbar-button onclick="fnSideMenuOpen('#menuParent');">
+                            <ons-icon icon="md-menu"> 
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">ComicsDB</div>
+                </ons-toolbar>
+                <div class="centerContent">
+                    <p><img src="img/books-1678014_1280-CROP.jpg" style="width: 95%; border-radius: 1em;"></p>
+                    <p style="text-align: left; padding-left: 2em; padding-right: 2em;" class="dropCap">
+                        Welcome! ComicsDB is your own personal comic book collection. Add comics whenever you want and browse them at your leisure. 
+                    </p>
+                </div>
+                <ons-bottom-toolbar>
+                    <p style="text-align: center;" class="uName" id="uNameTest">Copyright &copy; 2025</p>
+                </ons-bottom-toolbar>
+            </ons-page>
+        </template> <!-- END homeparent.html -->
+      
+        <template id="homeChild.html">
+            <ons-page>
+                <div class="centerContent">
+                    <h1>child</h1>
+                </div>
+            </ons-page>
+        </template> <!-- END homeChild.html -->
+
+        <template id="homeAdmin.html">
+            <ons-page>
+                <div class="centerContent">
+                    <h1>Admin</h1>
+                </div>
+            </ons-page>
+        </template> <!-- END homeAdmin.html -->
+      
+        <template id="profile.html">
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button onclick="fnSideMenuOpen('#menuParent');">
+                            <ons-icon icon="md-menu"> 
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">Profile</div>
+                </ons-toolbar>
+                <div style="padding: 1em;" class="centerContent">
+                    <h1>ComicsDB</h1>
+                    <div id="pProfile">&nbsp;</div>
+                    <p><img src="img/kapow-9231193_640.png" class="imgResizer"></p>
+                    <ons-button onclick="fnComicDBDelete();">Delete Collection</ons-button>
+                </div>
+            </ons-page>
+        </template> <!-- END profile.html -->
+
+        <template id="collection.html">
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button onclick="fnSideMenuOpen('#menuParent');">
+                            <ons-icon icon="md-menu"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">Collection</div>
+                </ons-toolbar>
+                <div class="centerContent">
+                    <!-- Placeholder to show/hide our collection -->
+                    <div id="divComicCollection">&nbsp;</div>
+                    <hr style="width: 95%;">
+                    <!-- Content to take user input -->
+                    <div id="divComicInput">
+                        <h3>Save a Comic</h3>
+                        <div id="divFormComicInput">
+                            <ons-input type="text"   placeholder="Spider-Man (Title)"   modifier="underbar"  id="inSaveTitle"></ons-input><br>
+                            <ons-input type="number" placeholder="1990 (Year)"          modifier="underbar"  id="inSaveYear"></ons-input><br>
+                            <ons-input type="number" placeholder="1 (Issue #)"          modifier="underbar"  id="inSaveNum"></ons-input><br>
+                            <ons-input type="text"   placeholder="First issue (Notes)"  modifier="underbar"  id="inSaveNote"></ons-input><br>
+                            <!-- Take a photo of the comic; scan barcode; add voice... via Corodova Plugin -->
+                            <br>
+                            <ons-button onclick="fnComicSaveCancel();">Clear</ons-button>  <ons-button onclick="fnComicSave();">Save</ons-button><br>
+                        </div>
+                    </div>
+                </div>
+            </ons-page>
+        </template> <!-- END collection.html -->
+
+        <template id="comicDetail.html">
+            <!-- NOTE: Not <ons-page> but <ons-dialog> and will be used for the JS (comicDetail), instead of (comicDetail.html)  -->
+            <!-- NOTE: It's an <ons-dialog> not <ons-page> -->
+            <ons-dialog id="comicDetail">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button onclick="fnComicPopUpClose();">
+                            <ons-icon icon="md-close"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">Comic Details</div>
+                </ons-toolbar>
+                <div style="padding: 2em; padding-top: 3em;">
+                    <p><strong>Title:</strong>     <ons-input type="text" modifier="underbar" id="inEditTitle"></ons-input></p>
+                    <p><strong>Year:</strong>      <ons-input type="text" modifier="underbar" id="inEditYear"></ons-input></p>
+                    <p><strong>Number:</strong>    <ons-input type="text" modifier="underbar" id="inEditNum"></ons-input></p>
+                    <p><strong>Note:</strong>      <ons-input type="text" modifier="underbar" id="inEditNote"></ons-input></p>
+                    <p style="text-align: center;"><ons-button onclick="fnComicDelete();">Delete</ons-button>  <ons-button onclick="fnComicUpdate();">Update</ons-button></p>
+                </div>
+            </ons-dialog>
+        </template> <!-- END comicDetail.html -->
+
+      <!-- END of all main content -->
+      </ons-splitter-content>
+  </ons-splitter> <!-- END of complete navigation paradigm -->
+
+  <!-- Load PouchDB library for JSON-powered (NoSQL) database -->
+  <script src="js/pouchdb-9.0.0.min.js"></script>
+  <!-- Our custom JS code goes here -->
+  <script src="js/scripts.js"></script>
+</body>
+</html>
